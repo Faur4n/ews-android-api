@@ -1,8 +1,7 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
-
 buildscript {
     repositories {
-        jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:1.3.0'
@@ -11,60 +10,6 @@ buildscript {
 
 allprojects {
     repositories {
-        jcenter()
-    }
-}
-
-task copySources(type: Copy) {
-    from ('ews-java-api/src/main/java') {
-        exclude 'microsoft/exchange/webservices/data/dns/DnsClient.java'
-    }
-    from 'patch'
-    into 'ews-android-api/src/main/java'
-
-    def repackageMap = [
-            'org.apache.commons':'android.org.apache.commons',
-            'org.apache.http':'android.org.apache.http',
-            'NamingEnumeration<?>':'NamingEnumeration',
-            'javax.xml.stream':'android.javax.xml.stream',
-            'javax.xml.namespace':'android.javax.xml.namespace',
-            'javax.xml.bind':'android.javax.xml.bind',
-            'javax.naming':'android.javax.naming',
-            'import javax.xml.ws.http.HTTPException;':'',
-            'HTTPException':'RuntimeException',
-            'XMLInputFactory.newInstance()':'XMLInputFactory.newInstance("android.javax.xml.stream.XMLInputFactory", XMLInputFactory.class.getClassLoader())',
-            'XMLOutputFactory.newInstance()':'android.javax.xml.stream.FixedXMLOutputFactory.newInstance("android.javax.xml.stream.XMLOutputFactory", XMLOutputFactory.class.getClassLoader())',
-            'XMLEventFactory.newInstance()':'XMLEventFactory.newInstance("android.javax.xml.stream.XMLEventFactory", XMLEventFactory.class.getClassLoader())',
-
-            /* We can't use DefaultHostnameVerifier because it uses javax.naming.ldap.LdapName class
-             * in DefaultHostnameVerifier#extractCN method.
-             */
-            'new DefaultHostnameVerifier()':'SSLConnectionSocketFactory.BROWSER_COMPATIBLE_HOSTNAME_VERIFIER'
-    ]
-	
-	def currentFile = ""
-	def lineNumber = 1
-	
-	eachFile { fileCopyDetails ->
-		currentFile = fileCopyDetails.getName()
-		lineNumber = 1
-	}
-	
-    filter { line ->
-        def changed = false
-        def original = line
-        repackageMap.each { k, v ->
-            if (line.contains(k)) {
-                line = line.replace(k, v)
-                changed = true
-            }
-        }
-
-        if (changed) {
-            println "${currentFile}:${lineNumber} original: ${original}, changed: ${line}"
-        }
-
-		lineNumber++
-        return line
+        mavenCentral()
     }
 }

@@ -1,25 +1,3 @@
-EWS Android API
-===============
-
-A java client library to access Exchange web services, packaged for Android. The API works against Office 365 Exchange Online as well as on premises Exchange.
-For API details, guidelines and examples go to [ews-java-api][ews-java-url].
-
-Building
---------
-
-Check-out the ews-java-api submodule:
-
-```
-git submodule init
-git submodule update
-```
-
-The following command creates a fat jar under ews-android-api/build/libs called **ews-android-api.jar**.
-
-```
-./gradlew copySources ews-android-api:build
-```
-
 Download
 --------
 Not available at this stage.  
