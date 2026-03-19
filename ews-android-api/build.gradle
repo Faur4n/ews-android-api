@@ -55,7 +55,7 @@ dependencies {
 
 	implementation(files(repackageTask))
     implementation 'joda-time:joda-time:2.8'
-    implementation 'dnsjava:dnsjava:2.1.6'
+	implementation 'dnsjava:dnsjava:3.6.4'
 }
 
 jar {
@@ -79,7 +79,7 @@ publishing {
         mavenJava(MavenPublication) {
             groupId = "com.github.fauran"
             artifactId = "ews-android-api"
-            version = "1.0"
+            version = "1.0.1"
 
             from components.java
         }
